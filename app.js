@@ -1,6 +1,6 @@
 var http = require('http');
 var fs = require('fs');
- 
+app.use(express.static('/public'));
 let handleRequest = (request, response) => {
     response.writeHead(200, {
         'Content-Type': 'text/html'
