@@ -1,0 +1,15 @@
+  .txtarea {
+    border: 1px solid #f0f040;
+    background-color: #fffff0;
+    width: 90%;
+    padding: 4px;
+    margin: 5px;
+    resize: none
+  }
+  .post{
+    border: 1px solid #f0f040;
+    background-color: #da99f7;
+    width: 90%;
+    padding: 4px;
+    margin: 5px;
+  }
