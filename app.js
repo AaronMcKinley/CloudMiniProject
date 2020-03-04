@@ -33,6 +33,10 @@ app.get('/', function(request, response) {
 	response.sendFile(path.join(__dirname + '/public/pages' + '/login.html'));
 });
 
+app.get('/ForumPage', function(request, response) {
+	response.sendFile(path.join(__dirname + '/public/pages' + '/Forum.html'));
+});
+
 //We need to now handle the POST request,
 app.post('/auth', function(request, response) {
 
