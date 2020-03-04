@@ -63,7 +63,7 @@ app.get('/home', function(request, response) {
 	} else { // User not logged in
 		response.redirect('/');
 	}
-	response.end();
+	//response.end();
 });
 
 app.get('/newUser', function(request, response) {
