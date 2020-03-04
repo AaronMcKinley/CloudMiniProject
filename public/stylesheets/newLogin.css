@@ -1,3 +1,14 @@
+.img-Container{
+  text-align: center;
+  display: block;
+  margin-top: 50px;
+}
+
+.sign {
+  max-width: 100%;
+  height: auto;
+}
+
 .login-form {
   width: 300px;
   margin: 0 auto;
@@ -20,11 +31,19 @@
 .login-form button {
   width: 100%;
   padding: 15px;
-  background-color: #535b63;
   border: 0;
   margin-top: 15px;
   box-sizing: border-box;
   cursor: pointer;
   font-weight: bold;
+}
+
+.login-form button[id="login"] {
+  background-color: #66f542;
+  color: #000000;
+}
+
+.login-form button[id="SignUp"] {
+  background-color: #535b63;
   color: #ffffff;
 }

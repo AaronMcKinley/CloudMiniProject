@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sign up</title>
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+    <link rel='stylesheet' type='text/css' href='/public/stylesheets/newLogin.css'>
+  </head>
+
+  <body>
+    <div class="login-form">
+      <div class="img-Container">
+      	<img src="/public/Images/sign-up.png" alt="Avatar" class="sign" >
+			</div>
+      <h1>Sign up Form</h1>
+      <form action="storeUser" method="POST">
+
+        <input type="text" name="firstname" placeholder="First name" required>
+        <input type="text" name="lastname" placeholder="Last name" required>
+        <input type="text" name="email" placeholder="Email" required>
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" id="pass" name="password" placeholder="Password" required>
+
+        <button type="submit"> Register</button>
+      </form>
+    </div>
+  </body>
+</html>

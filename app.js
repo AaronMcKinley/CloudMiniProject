@@ -42,7 +42,7 @@ app.post('/auth', function(request, response) {
   console.log('username:' + username);
   console.log('password:' + password);
 
-  if (username && password) {
+  if (username && password) { //// TODO: Better check than this
     request.session.loggedin = true;
 		request.session.username = username;
     response.redirect('/home');
@@ -58,12 +58,33 @@ app.post('/auth', function(request, response) {
 // //TODO HOME Page
 app.get('/home', function(request, response) {
 	if (request.session.loggedin) {
-		response.send('Welcome back, ' + request.session.username + '!' + '\n' +
-									"The date and time are currently: " + dt.myDateTime());
-	} else {
-		response.send('Please login to view this page!');
+		response.sendFile(path.join(__dirname + '/public/pages' + '/homePage.html'));
+		//response.send('Welcome back, ' + request.session.username + '!' + '\n' + "The date and time are currently: " + dt.myDateTime());
+	} else { // User not logged in
+		response.redirect('/');
 	}
 	response.end();
+});
+
+app.get('/newUser', function(request, response) {
+	response.sendFile(path.join(__dirname + '/public/pages' + '/signUp.html'));
+});
+
+app.post('/storeUser', function(request, response) {
+	//Create new user on database
+	var username = request.body.username;
+	var password = request.body.password;
+	var firstName = request.body.firstName;
+	var lastName = request.body.lastName;
+	var email = request.body.email;
+
+	if (username && password) { //// TODO: Better check than this
+		//check and store all these details in mongoDB
+	}
+	else {
+		response.redirect('/newUser');
+	}
+
 });
 
 app.listen(8080);
