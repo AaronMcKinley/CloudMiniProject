@@ -37,6 +37,10 @@ app.get('/ForumPage', function(request, response) {
 	response.sendFile(path.join(__dirname + publicPages + '/Forum.html'));
 });
 
+app.get('/Courses', function(request, response) {
+	response.sendFile(path.join(__dirname + publicPages + '/Courses.html'));
+});
+
 app.post('/auth', function(request, response) {
 
   var username = request.body.username;

@@ -4,6 +4,7 @@
 
 /* Style the body */
 body {
+  background-color: #e7c8e8;
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
 }
@@ -62,4 +63,19 @@ body {
   padding: 20px;
   text-align: center;
   background: #ddd;
+}
+.txtarea {
+  border: 1px solid #f0f040;
+  background-color: #fffff0;
+  width: 90%;
+  padding: 4px;
+  margin: 5px;
+  resize: none
+}
+.post{
+  border: 1px solid #f0f040;
+  background-color: #a1b3f0;
+  width: 90%;
+  padding: 4px;
+  margin: 5px;
 }
