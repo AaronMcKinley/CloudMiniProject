@@ -2,24 +2,26 @@
   box-sizing: border-box;
 }
 
+/* Header/logo Title */
+.header{
+	display: flex;
+  flex-direction: row;
+  background-color: #7b4099;
+}
+.headerInner{
+  padding: 5px;
+	display: flex;
+  flex-direction: column;
+  text-align: center;
+  background-color: #7b4099;
+	font-size: 17px ;
+}
+
 /* Style the body */
 body {
   background-color: #e7c8e8;
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
-}
-
-/* Header/logo Title */
-.header {
-  padding: 80px;
-  text-align: center;
-  background: #7b4099;
-  color: white;
-}
-
-/* Main heading */
-.header h1 {
-  font-size: 40px;
 }
 
 /* Sticky navbar - toggles between relative and fixed, depending on the scroll position. It is positioned relative until a given offset position is met in the viewport - then it "sticks" in place (like position:fixed). The sticky value is not supported in IE or Edge 15 and earlier versions. However, for these versions the navbar will inherit default position */
@@ -60,10 +62,15 @@ body {
 
 /* Footer */
 .footer {
+  margin-top: 50px;
   padding: 20px;
-  text-align: center;
+  text-align: left;
   background: #ddd;
 }
+
+
+
+
 .txtarea {
   border: 1px solid #f0f040;
   background-color: #fffff0;

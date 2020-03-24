@@ -27,10 +27,17 @@ app.use('/public', express.static('public'));
 //Make sure to change the secret code for the sessions, the sessions package is what we'll use to determine if the user is logged-in, the
 //bodyParser package will extract the form data from our login.html file.
 
-//We now need to display our login.html file to the client:
-//TODO HOME Page
+
+// ********************** functions for GET/POST go here ****************************************************************************************************************
+
 app.get('/', function(request, response) {
-	response.sendFile(path.join(__dirname + publicPages + '/login.html'));
+	if (request.session.loggedin) {
+		response.redirect('/home');
+		response.end();
+	} else { // User not logged in
+		response.sendFile(path.join(__dirname + publicPages + '/login.html'));
+	}
+
 });
 
 app.get('/ForumPage', function(request, response) {
@@ -61,7 +68,7 @@ app.post('/auth', function(request, response) {
 	}
 });
 
-// //TODO HOME Page
+// HOME Page
 app.get('/home', function(request, response) {
 	if (request.session.loggedin) {
 		response.sendFile(path.join(__dirname + publicPages + '/homePage.html'));
@@ -91,6 +98,11 @@ app.post('/storeUser', function(request, response) {
 		response.redirect('/newUser');
 	}
 
+});
+
+app.get('/signOut', function(request, response) {
+	request.session.loggedin = false;
+	response.sendFile(path.join(__dirname + publicPages + '/login.html'));
 });
 
 app.listen(8080);
