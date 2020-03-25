@@ -1,16 +1,20 @@
-//var mysql = require('mysql'); //TODO not needed - keep for example
 var express = require('express');
-var session = require('express-session');
-var bodyParser = require('body-parser');
 var path = require('path');
+var session = require('express-session');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var hbs = require('express-handlebars');
 
-var dt = require('./public/javascripts/myfirstmodule');
+var routes = require('./routes/index');
 
-var publicPages = '/public/pages';
-// TODO skipped mySQL connection handleRequest
-
-//Express is what we'll use for our web applications, this includes packages useful in web development, such as sessions and handling HTTP requests, to initialize it we can do:
 var app = express();
+
+// view engine setup
+app.engine('hbs', hbs({extname: 'hbs'}));
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
 
 //We now need to let Express know we'll be using some of its packages:
 app.use(session({
@@ -19,90 +23,47 @@ app.use(session({
 	saveUninitialized: true
 }));
 
-app.use(bodyParser.urlencoded({extended : true}));
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger('dev'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/', routes);
 app.use('/public', express.static('public'));
 
-//Make sure to change the secret code for the sessions, the sessions package is what we'll use to determine if the user is logged-in, the
-//bodyParser package will extract the form data from our login.html file.
-
-
-// ********************** functions for GET/POST go here ****************************************************************************************************************
-
-app.get('/', function(request, response) {
-	if (request.session.loggedin) {
-		response.redirect('/home');
-		response.end();
-	} else { // User not logged in
-		response.sendFile(path.join(__dirname + publicPages + '/login.html'));
-	}
-
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 
-app.get('/ForumPage', function(request, response) {
-	response.sendFile(path.join(__dirname + publicPages + '/Forum.html'));
+// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
+  });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {}
+  });
 });
 
-app.get('/Courses', function(request, response) {
-	response.sendFile(path.join(__dirname + publicPages + '/Courses.html'));
-});
 
-app.post('/auth', function(request, response) {
-
-  var username = request.body.username;
-  var password = request.body.password;
-
-  console.log('username:' + username);
-  console.log('password:' + password);
-
-  if (username && password) { //// TODO: Better check than this
-    request.session.loggedin = true;
-		request.session.username = username;
-    response.redirect('/home');
-    response.end();
-  }
-  else {
-		response.send('Please enter Username and Password!');
-		response.end();
-	}
-});
-
-// HOME Page
-app.get('/home', function(request, response) {
-	if (request.session.loggedin) {
-		response.sendFile(path.join(__dirname + publicPages + '/homePage.html'));
-		//response.send('Welcome back, ' + request.session.username + '!' + '\n' + "The date and time are currently: " + dt.myDateTime());
-	} else { // User not logged in
-		response.redirect('/');
-		response.end();
-	}
-});
-
-app.get('/newUser', function(request, response) {
-	response.sendFile(path.join(__dirname + publicPages + '/signUp.html'));
-});
-
-app.post('/storeUser', function(request, response) {
-	//Create new user on database
-	var username = request.body.username;
-	var password = request.body.password;
-	var firstName = request.body.firstName;
-	var lastName = request.body.lastName;
-	var email = request.body.email;
-
-	if (username && password) { //// TODO: Better check than this
-		//check and store all these details in mongoDB
-	}
-	else {
-		response.redirect('/newUser');
-	}
-
-});
-
-app.get('/signOut', function(request, response) {
-	request.session.loggedin = false;
-	response.sendFile(path.join(__dirname + publicPages + '/login.html'));
-});
-
-app.listen(8080);
+module.exports = app;

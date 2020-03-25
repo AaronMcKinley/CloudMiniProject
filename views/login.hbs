@@ -3,20 +3,19 @@
 	<head>
 		<title>User Login</title>
 		<meta http-equiv="Content-Type" content="text/html" charset="utf-8">
-		<link rel='stylesheet' type='text/css' href='/public/stylesheets/newLogin.css'>
+		<link rel='stylesheet' type='text/css' href='/stylesheets/newLogin.css'>
 	</head>
 	<body>
 		<div class="login-form">
 			<div class="img-Container">
-      	<img src="/public/Images/ourLogo.png" alt="Avatar" class="avatar" >
+      	<img src="/Images/ourLogo.png" alt="Avatar" class="avatar" >
 			</div>
-			<h1>Welcome to College Forums<br><br>Please login below:</h1>
+			<h1> {{message}}<br><br>Welcome to College Forums<br><br>Please login below:</h1>
 			<form action="auth" method="POST">
 				<input type="text" name="username" placeholder="Username" required>
 				<input type="password" id="pass" name="password" placeholder="Password" required>
 				<input type="checkbox" onclick="viewPassword()"> Show password
 				<button id="login" type="submit">Login</button>
-				<a id="userforgot" href="//www.grandpanoclothes.com">Forgot your password?</a>
 			</form>
 			<form action="newUser" method="GET">
 				<button id="SignUp" type="submit">New User? Sign Up</button>
