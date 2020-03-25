@@ -43,11 +43,9 @@ router.get('/', function(req, res, next) {
 
 router.post('/auth', function(req, res, next) {
   var myFormObject = {
-    username: "",
-    password: ""
+    username: req.body.username,
+    password: req.body.password
   };
-  myFormObject.username = req.body.username;
-  myFormObject.password = req.body.password;
 
   if (myFormObject.username && myFormObject.password) { //// TODO: Better check than this
     req.session.loggedin = true;
@@ -77,22 +75,29 @@ router.get('/ForumPage', function(req, res, next) {
 });
 
 router.get('/Courses', function(req, res, next) {
-  res.render('Courses');
+  var CoursObject = {
+    date: '1/1/2020',
+    content: 'This the the data in the post'
+  };
+
+  res.render('Courses', { postDate: CoursObject.date, postContent: CoursObject.content});
 });
 
 router.get('/newUser', function(req, res, next) {
-  //response.sendFile(path.join(__dirname + publicPages + '/signUp.html'));
+  //res.sendFile(path.join(__dirname + publicPages + '/signUp.html'));
 });
 
 router.post('/storeUser', function(req, res, next) {
-    //Create new user on database
-  var username = request.body.username;
-  var password = request.body.password;
-  var firstName = request.body.firstName;
-  var lastName = request.body.lastName;
-  var email = request.body.email;
+  //Create new user on database
+  var newUser = {
+    username: request.body.username,
+    password: request.body.password,
+    firstName: request.body.firstName,
+    lastName: request.body.lastName,
+    email: request.body.email
+  };
 
-  if (username && password) { //// TODO: Better check than this
+  if (newUser.username && newUser.password) { //// TODO: Better check than this
     //check and store all these details in mongoDB
   }
   else {
@@ -103,7 +108,7 @@ router.post('/storeUser', function(req, res, next) {
 router.get('/signOut', function(req, res, next) {
   req.session.loggedin = false;
   //TODO dirname goes into routes folder
-  //response.sendFile(path.join(__dirname + publicPages + '/login.html'));
+  //res.sendFile(path.join(__dirname + publicPages + '/login.html'));
   res.render('login', {message: 'You have been successfully logged out'});
 });
 
