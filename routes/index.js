@@ -75,13 +75,17 @@ router.post('/ForumPage', function(req, res, next) {
   console.log(id);
 
   var PostObject = {
+    author: 'Mike',
     date: '1/1/2020',
+    time: '16:50',
     content: 'This the the data in the post',
     postID: '1'
   };
 
   var PostObject2 = {
+    author: 'Tom',
     date: '10/2/2020',
+    time: '16:59',
     content: 'This the second data in the post',
     postID: '2'
   };
@@ -90,7 +94,7 @@ router.post('/ForumPage', function(req, res, next) {
 
   var myPostlist = [PostObject, PostObject2];
 
-  res.render('Forum', { courses: myPostlist });
+  res.render('Forum', { courseName: id, posts: myPostlist });
 });
 
 router.get('/Courses', function(req, res, next) {

@@ -11,6 +11,9 @@
       <div class="headerInner">
         <img src="/Images/ourLogo.png" alt="logo" class="logo" >
       </div>
+      <div class="headerInner" style="width: 100%;">
+      <h1> This is course ID: {{ courseName }} </h1>
+      </div>
     </div>
 
     <!-- NAV BAR -->
@@ -26,9 +29,9 @@
     <div class="main">
       <!-- Write all main code here -->
 
-      {{#each courses}}
+      {{#each posts}}
         <div class="post">
-          <p class ="postData"> Date: {{ date }} <br><br>{{content}}</p>
+          <p class ="postData"> Author: {{author}}<br><br>Date: {{ date }}<br>Time: {{time}}<br><br>{{content}}</p>
         </div>
       {{/each}}
 
