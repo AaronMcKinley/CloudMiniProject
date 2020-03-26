@@ -69,24 +69,28 @@ body {
 }
 
 
-
-
-.txtarea {
+.newPost {
   border: 1px solid #f0f040;
+  display: flex;
+  flex-direction: row;
   background-color: #fffff0;
   width: 90%;
-  padding: 4px;
-  margin: 5px;
-  resize: none
+  margin-top: 30px;
 }
-.post{
+
+
+.post {
   border: 1px solid #f0f040;
   display: flex;
   flex-direction: row;
   background-color: #a1b3f0;
   width: 90%;
-  padding: 4px;
-  margin: 30px;
+  margin-top: 30px;
+}
+
+.main {
+    padding: 4px;
+    margin: 30px;
 }
 
 .btn-link {

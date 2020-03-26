@@ -12,7 +12,7 @@
         <img src="/Images/ourLogo.png" alt="logo" class="logo" >
       </div>
       <div class="headerInner" style="width: 100%;">
-      <h1> This is course ID: {{ courseName }} </h1>
+      <h1><br>This is course ID: {{ courseName }} </h1>
       </div>
     </div>
 
@@ -36,11 +36,10 @@
       {{/each}}
 
       <!-- Reply -->
-      <textarea class="txtarea" cols="50" rows="5">
-          text box with padding and margin inside a fixed width div.
-          how do I made the text box auto-fit nicely inside the div?
-      </textarea>
-      <button type="button">Post</button>
+      <form action="newPost" method="POST">
+        <textarea class="newPost" name="data" cols="50" rows="5" placeholder="Write your Reply here"></textarea>
+				<button id="newReply" type="submit" >Post Reply</button>
+			</form>
 
     </div>
 
