@@ -25,9 +25,16 @@
     <!-- Main data for the page -->
     <div class="main">
       <!-- Write all main code here -->
-      <div class="post">
-        <p class ="post"> Date: {{postDate}} <br><br>{{postContent}}</p>
-      </div>
+
+      {{#each courses}}
+        <div class="post">
+          <p class ="postData"> <b>{{ title }}<br></b>Teacher: {{ teacher }}<br>Last updated: {{ date }} <br><br>{{content}}</p>
+          <form action="ForumPage" method="post">
+            <button type="submit" name="theCourseID" value={{ courseID }} class="btn-link">Go</button>
+          </form>
+        </div>
+      {{/each}}
+
     </div>
 
     <!-- FOOTER -->

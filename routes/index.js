@@ -70,17 +70,57 @@ router.get('/home', function(req, res, next) {
   }
 });
 
-router.get('/ForumPage', function(req, res, next) {
-  res.render('Forum');
+router.post('/ForumPage', function(req, res, next) {
+  var id = req.body.theCourseID;
+  console.log(id);
+
+  var PostObject = {
+    date: '1/1/2020',
+    content: 'This the the data in the post',
+    postID: '1'
+  };
+
+  var PostObject2 = {
+    date: '10/2/2020',
+    content: 'This the second data in the post',
+    postID: '2'
+  };
+
+  //TOdo query database with the id above
+
+  var myPostlist = [PostObject, PostObject2];
+
+  res.render('Forum', { courses: myPostlist });
 });
 
 router.get('/Courses', function(req, res, next) {
   var CoursObject = {
+    title: 'Maths',
+    teacher: 'Mary',
     date: '1/1/2020',
-    content: 'This the the data in the post'
+    content: 'This is the course description',
+    courseID: '1'
   };
 
-  res.render('Courses', { postDate: CoursObject.date, postContent: CoursObject.content});
+  var CoursObject2 = {
+    title: 'English',
+    teacher: 'John',
+    date: '10/10/2020',
+    content: 'second course description',
+    courseID: '2'
+  };
+
+  var CoursObject3 = {
+    title: 'Irish',
+    teacher: 'Pat',
+    date: '12/12/2020',
+    content: 'third course description',
+    courseID: '3'
+  };
+
+  var myCourselist = [CoursObject, CoursObject2, CoursObject3,CoursObject,CoursObject,CoursObject,CoursObject,CoursObject,CoursObject,CoursObject,CoursObject,CoursObject];
+
+  res.render('Courses', { courses: myCourselist });
 });
 
 router.get('/newUser', function(req, res, next) {
