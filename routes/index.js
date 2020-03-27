@@ -39,19 +39,9 @@ mongoose.Promise = global.Promise;
 
 mongoose.connect('mongodb://localhost:27017/collegeForums', { useNewUrlParser: true });
 
-// const courseSchema = new mongoose.Schema({
-// title: String,
-// teacher: String,
-// date: String,
-// content: String,
-// courseID: Number
-// });
-//
-// const Course = mongoose.model('course', courseSchema);
-
 const Course = require('../models/courses');
 const Post = require('../models/posts');
-
+const User = require('../models/users');
 // ********************** functions for GET/POST go here ****************************************************************************************************************
 
 
@@ -69,21 +59,37 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/auth', function(req, res, next) {
-  var myFormObject = {
-    username: req.body.username,
-    password: req.body.password
-  };
 
-  if (myFormObject.username && myFormObject.password) { //// TODO: Better check than this
-    req.session.loggedin = true;
-		req.session.username = myFormObject.username;
-    res.redirect('/home');
-    res.end();
-  }
-  else {
-		res.send('Please enter Username and Password!');
-		res.end();
-	}
+  User.findOne( {username : req.body.username,
+              password : req.body.password},
+              function(err, docs) {
+                if(!docs)
+                {
+                  res.render('login');
+                  return;
+                }
+                else {
+                  req.session.loggedin = true;
+              		req.session.username = req.body.username;
+                  //req.session.firstname =
+                  res.redirect('/home');
+                  res.end();
+                }
+
+  });
+
+  // Comment this all back in to get access if dataabse isnt working
+  // if (myFormObject.username && myFormObject.password) { //// TODO: Better check than this
+  //   req.session.loggedin = true;
+	// 	req.session.username = myFormObject.username;
+  //   //req.session.firstname =
+  //   res.redirect('/home');
+  //   res.end();
+  // }
+  // else {
+	// 	res.send('Please enter Username and Password!');
+	// 	res.end();
+	// }
 
 });
 
@@ -116,7 +122,7 @@ router.get('/Courses', function(req, res, next) {
 
 router.post('/newPost', function(req, res, next) {
   var newReplyObject = {
-    author: 'TestAuthor',
+    author: req.session.username,
     date: dt.myDate(), //TODO get current date and time
     time: dt.myTime(),
     content: req.body.data,
@@ -126,35 +132,45 @@ router.post('/newPost', function(req, res, next) {
    var data = new Post(newReplyObject);
    data.save();
 
-   res.redirect(307, '/ForumPage');
+   //Now update the "last updated part in the courses collection
+   Course.findOneAndUpdate( {courseID : req.body.theCourseID}, {date: dt.myDateTime() }, function() {
+     res.redirect(307, '/ForumPage');
+     res.end();
+   });
+
 });
 
-// ************** Not yet implemented **************************************************************************************
 router.get('/newUser', function(req, res, next) {
-  //res.sendFile(path.join(__dirname + publicPages + '/signUp.html'));
+  res.sendFile(path.join(__dirname + '/../' +publicPages + '/signUp.html'));
 });
 
 router.post('/storeUser', function(req, res, next) {
-  //Create new user on database
-  var newUser = {
+
+  var newUserObject = {
     username: req.body.username,
     password: req.body.password,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
     email: req.body.email
   };
 
-  if (newUser.username && newUser.password) { //// TODO: Better check than this
-    //check and store all these details in mongoDB
-  }
-  else {
-    res.redirect('/newUser');
-  }
+  //TODO doesnt check is the username already exists
+   var data = new User(newUserObject);
+   data.save();
+
+   req.session.loggedin = true;
+   req.session.username = newUserObject.username;
+   req.session.firstname = newUserObject.firstname;
+   res.redirect('/home');
+   res.end();
+
 });
 // *****************************************************************************************************************************
 
 router.get('/signOut', function(req, res, next) {
   req.session.loggedin = false;
+  req.session.username = "";
+  req.session.firstname = "";
   //TODO dirname goes into routes folder
   //res.sendFile(path.join(__dirname + publicPages + '/login.html'));
   res.render('login', {message: 'You have been successfully logged out'});

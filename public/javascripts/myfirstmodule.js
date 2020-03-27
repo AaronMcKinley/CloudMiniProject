@@ -1,5 +1,5 @@
 exports.myDateTime = function () {
-  return Date();
+  return this.myTime() + ' on the ' + this.myDate();
 };
 
 
