@@ -33,7 +33,7 @@ const { exec } = require("child_process");
 
 var path = require('path');
 var publicPages = '/public/pages';
-//var dt = require('./public/javascripts/myfirstmodule');
+var dt = require('../public/javascripts/myfirstmodule');
 
 mongoose.Promise = global.Promise;
 
@@ -103,7 +103,7 @@ router.post('/ForumPage', function(req, res, next) {
 
   Post.find( {courseID : id}, function(err, docs) {
     //TODO sort docs, could come in any order
-    res.render('Forum', { courseName: id, posts: docs });
+    res.render('Forum', { courseID: id, posts: docs });
   });
 });
 
@@ -117,10 +117,10 @@ router.get('/Courses', function(req, res, next) {
 router.post('/newPost', function(req, res, next) {
   var newReplyObject = {
     author: 'TestAuthor',
-    date: 'Today', //TODO get current date and time
-    time: 'Today',
+    date: dt.myDate(), //TODO get current date and time
+    time: dt.myTime(),
     content: req.body.data,
-    courseID: 2
+    courseID: req.body.theCourseID
   };
 
    var data = new Post(newReplyObject);
@@ -129,6 +129,7 @@ router.post('/newPost', function(req, res, next) {
    res.redirect(307, '/ForumPage');
 });
 
+// ************** Not yet implemented **************************************************************************************
 router.get('/newUser', function(req, res, next) {
   //res.sendFile(path.join(__dirname + publicPages + '/signUp.html'));
 });
@@ -150,6 +151,7 @@ router.post('/storeUser', function(req, res, next) {
     res.redirect('/newUser');
   }
 });
+// *****************************************************************************************************************************
 
 router.get('/signOut', function(req, res, next) {
   req.session.loggedin = false;
