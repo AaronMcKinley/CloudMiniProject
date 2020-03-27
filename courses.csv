@@ -1,4 +1,8 @@
 title,teacher,date,content,courseID
-Maths,Mary,1/1/2020,This is the course description,1
+Maths,Mary,01/01/2020,This is the course description,1
 English,John,10/10/2020,second course description,2
 Irish,Pat,12/12/2020,third course description,3
+French,Mike,07/07/2020,contenttttt,4
+History,Kate,02/03/2020,course description,5
+Geography,Colm,04/01/2020,course description,6
+PE,Gary,07/07/2020,course,7
