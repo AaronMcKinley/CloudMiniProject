@@ -1,3 +1,23 @@
+//Notes
+//res.render('login', {title: "My First Page"});
+//res.render('login');
+
+//TODO dirname goes into routes folder
+//res.sendFile(path.join(__dirname + '/index.js'));
+
+//// mongoose.connection.dropDatabase();
+//Customer.create({ name: 'C', age: 40, email: 'c@foo.bar' });
+
+//  // var item = {
+  //   name: 'pa',
+  //   aage: '12',
+  // };
+  //
+  // var data = new UserData(item);
+  // data.save();
+
+
+//dt.myDateTime()
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
@@ -8,26 +28,74 @@ var path = require('path');
 var publicPages = '/public/pages';
 //var dt = require('./public/javascripts/myfirstmodule');
 
-// TODO:  mongoose.connect('localhost:27017/scriptDb');
-//var Schema = mongoose.Schema;
+mongoose.Promise = global.Promise;
 
-//var scriptSchema = new Schema({
-//  Name: String,
-//  Script: String
-//});
+mongoose.connect('mongodb://localhost:27017/forums', { useNewUrlParser: true });
+//mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true });
 
-//var theScript = mongoose.model('script', scriptSchema);
 
+// var Schema = mongoose.Schema;
+//
+// var userDataSchema = new Schema({
+//   name: String,
+//   age: String,
+// }, {collection: 'testGH'});
+const courseSchema = new mongoose.Schema({
+title: String,
+teacher: String,
+date: String,
+content: String,
+courseID: Number
+});
+
+// const customerSchema = new mongoose.Schema({
+//   name: String,
+//   age: Number,
+//   email: String
+// });
+
+
+// var UserData = mongoose.model('testGH', userDataSchema);
+  //const Customer = mongoose.model('Customer', customerSchema);
+  const Course = mongoose.model('course', courseSchema);
+
+  //TODO make sure to remove this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  mongoose.connection.dropDatabase();
+
+  var CoursObject = {
+    title: 'Maths',
+    teacher: 'Mary',
+    date: '1/1/2020',
+    content: 'This is the course description',
+    courseID: '1'
+  };
+
+  var CoursObject2 = {
+    title: 'English',
+    teacher: 'John',
+    date: '10/10/2020',
+    content: 'second course description',
+    courseID: '2'
+  };
+
+  var CoursObject3 = {
+    title: 'Irish',
+    teacher: 'Pat',
+    date: '12/12/2020',
+    content: 'third course description',
+    courseID: '3'
+  };
+
+   var data = new Course(CoursObject);
+   data.save();
+
+   var data = new Course(CoursObject2);
+   data.save();
+
+   var data = new Course(CoursObject3);
+   data.save();
 // ********************** functions for GET/POST go here ****************************************************************************************************************
 
-//Notes
-//res.render('login', {title: "My First Page"});
-//res.render('login');
-
-//TODO dirname goes into routes folder
-//res.sendFile(path.join(__dirname + '/index.js'));
-
-//dt.myDateTime()
 
 router.get('/', function(req, res, next) {
   if (req.session.loggedin) {
@@ -98,33 +166,10 @@ router.post('/ForumPage', function(req, res, next) {
 });
 
 router.get('/Courses', function(req, res, next) {
-  var CoursObject = {
-    title: 'Maths',
-    teacher: 'Mary',
-    date: '1/1/2020',
-    content: 'This is the course description',
-    courseID: '1'
-  };
-
-  var CoursObject2 = {
-    title: 'English',
-    teacher: 'John',
-    date: '10/10/2020',
-    content: 'second course description',
-    courseID: '2'
-  };
-
-  var CoursObject3 = {
-    title: 'Irish',
-    teacher: 'Pat',
-    date: '12/12/2020',
-    content: 'third course description',
-    courseID: '3'
-  };
-
-  var myCourselist = [CoursObject, CoursObject2, CoursObject3,CoursObject,CoursObject,CoursObject,CoursObject,CoursObject,CoursObject,CoursObject,CoursObject,CoursObject];
-
-  res.render('Courses', { courses: myCourselist });
+  Course.find( function(err, docs) {
+    //TODO sort docs, could come in any order
+    res.render('Courses', { courses: docs });
+  });
 });
 
 router.get('/newUser', function(req, res, next) {
