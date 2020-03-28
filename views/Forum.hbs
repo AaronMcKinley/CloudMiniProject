@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
   <head>
-    <link rel='stylesheet' type='text/css' href='/stylesheets/homePageStyle.css'>
+    <link rel='stylesheet' type='text/css' href='/stylesheets/forumPageStyle.css'>
   </head>
 
   <body>
@@ -28,17 +28,19 @@
     <!-- Main data for the page -->
     <div class="main">
       <!-- Write all main code here -->
-
       {{#each posts}}
+      <div class="outerPost" >
         <div class="post">
-          <p class ="postData"> Author: {{author}}<br><br>Date: {{ date }}<br>Time: {{time}}<br><br>{{content}}</p>
+          <p class="postData"><b>{{author}}</b><br><br>Date: {{ date }}<br>Time: {{time}}</p>
+          <p class ="postContent">{{content}}</p>
         </div>
+      </div>
       {{/each}}
 
       <!-- Reply -->
       <form action="newPost" method="POST">
-        <textarea class="newPost" name="data" cols="50" rows="5" placeholder="Write your Reply here"></textarea>
-				<button id="newReply" type="submit" >Post Reply</button>
+        <textarea class="newPost" name="data" cols="50" rows="5" placeholder="Write your Reply here" required></textarea>
+				<button id="newReply" type="submit" text-align="center">Post Reply</button>
         <input type="hidden" name="theCourseID" value={{ courseID }}>
 			</form>
     </div>

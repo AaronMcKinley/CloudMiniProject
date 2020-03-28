@@ -79,9 +79,9 @@ router.post('/auth', function(req, res, next) {
   });
 
   // Comment this all back in to get access if dataabse isnt working
-  // if (myFormObject.username && myFormObject.password) { //// TODO: Better check than this
+  // if (req.body.username && req.body.password) { //// TODO: Better check than this
   //   req.session.loggedin = true;
-	// 	req.session.username = myFormObject.username;
+	// 	req.session.username = req.body.username;
   //   //req.session.firstname =
   //   res.redirect('/home');
   //   res.end();

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
   <head>
-    <link rel='stylesheet' type='text/css' href='/stylesheets/homePageStyle.css'>
+    <link rel='stylesheet' type='text/css' href='/stylesheets/forumPageStyle.css'>
   </head>
 
   <body>
@@ -27,12 +27,12 @@
     <!-- Main data for the page -->
     <div class="main">
       <!-- Write all main code here -->
-
+      <h2 align="center">My Courses</h2>
       {{#each courses}}
-        <div class="post">
-          <p class ="postData"> <b>{{ title }}<br></b>Teacher: {{ teacher }}<br>Last updated: {{ date }} <br><br>{{content}}</p>
+        <div class="courses">
+          <p class ="courseContent"> <b>{{ title }}<br></b>Teacher: {{ teacher }}<br>Last updated: {{ date }} <br><br>{{content}}</p>
           <form action="ForumPage" method="post">
-            <button type="submit" name="theCourseID" value={{ courseID }} class="btn-link">Go</button>
+            <button type="submit" name="theCourseID" value={{ courseID }} class="Go-link">Go</button>
           </form>
         </div>
       {{/each}}
