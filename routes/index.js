@@ -46,7 +46,6 @@ const User = require('../models/users');
 
 
 router.get('/', function(req, res, next) {
-
   if (req.session.loggedin) {
     res.redirect('/home');
     res.end();
@@ -55,11 +54,9 @@ router.get('/', function(req, res, next) {
     res.render('login');
         //res.sendFile(path.join(__dirname + publicPages + '/login.html'));
   }
-
 });
 
 router.post('/auth', function(req, res, next) {
-
   User.findOne( {username : req.body.username,
               password : req.body.password},
               function(err, docs) {
@@ -75,22 +72,7 @@ router.post('/auth', function(req, res, next) {
                   res.redirect('/home');
                   res.end();
                 }
-
   });
-
-  // Comment this all back in to get access if dataabse isnt working
-  // if (req.body.username && req.body.password) { //// TODO: Better check than this
-  //   req.session.loggedin = true;
-	// 	req.session.username = req.body.username;
-  //   //req.session.firstname =
-  //   res.redirect('/home');
-  //   res.end();
-  // }
-  // else {
-	// 	res.send('Please enter Username and Password!');
-	// 	res.end();
-	// }
-
 });
 
 // HOME Page
@@ -104,40 +86,54 @@ router.get('/home', function(req, res, next) {
 });
 
 router.post('/ForumPage', function(req, res, next) {
-  var id = req.body.theCourseID;
-  console.log(id);
+  if (req.session.loggedin) {
+    var id = req.body.theCourseID;
+    console.log(id);
 
-  Post.find( {courseID : id}, function(err, docs) {
-    //TODO sort docs, could come in any order
-    res.render('Forum', { courseID: id, posts: docs });
-  });
+    Post.find( {courseID : id}, function(err, docs) {
+      //TODO sort docs, could come in any order
+      res.render('Forum', { courseID: id, posts: docs });
+    });
+  } else { // User not logged in
+      res.redirect('/');
+      res.end();
+  }
 });
 
 router.get('/Courses', function(req, res, next) {
-  Course.find( function(err, docs) {
-    //TODO sort docs, could come in any order
-    res.render('Courses', { courses: docs });
-  });
+  if (req.session.loggedin) {
+    Course.find( function(err, docs) {
+      //TODO sort docs, could come in any order
+      res.render('Courses', { courses: docs });
+    });
+  } else { // User not logged in
+      res.redirect('/');
+      res.end();
+  }
 });
 
 router.post('/newPost', function(req, res, next) {
-  var newReplyObject = {
-    author: req.session.username,
-    date: dt.myDate(), //TODO get current date and time
-    time: dt.myTime(),
-    content: req.body.data,
-    courseID: req.body.theCourseID
-  };
+  if (req.session.loggedin) {
+    var newReplyObject = {
+      author: req.session.username,
+      date: dt.myDate(), //TODO get current date and time
+      time: dt.myTime(),
+      content: req.body.data,
+      courseID: req.body.theCourseID
+    };
 
-   var data = new Post(newReplyObject);
-   data.save();
+     var data = new Post(newReplyObject);
+     data.save();
 
-   //Now update the "last updated part in the courses collection
-   Course.findOneAndUpdate( {courseID : req.body.theCourseID}, {date: dt.myDateTime() }, function() {
-     res.redirect(307, '/ForumPage');
-     res.end();
-   });
-
+     //Now update the "last updated part in the courses collection
+     Course.findOneAndUpdate( {courseID : req.body.theCourseID}, {date: dt.myDateTime() }, function() {
+       res.redirect(307, '/ForumPage');
+       res.end();
+     });
+   } else { // User not logged in
+       res.redirect('/');
+       res.end();
+   }
 });
 
 router.get('/newUser', function(req, res, next) {

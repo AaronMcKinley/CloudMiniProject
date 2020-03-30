@@ -4,6 +4,11 @@
   margin-top: 50px;
 }
 
+.redText
+{
+    color: red;
+}
+
 .sign {
   max-width: 100%;
   height: auto;
