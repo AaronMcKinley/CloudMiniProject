@@ -89,7 +89,6 @@ router.get('/home', function(req, res, next) {
 router.post('/ForumPage', function(req, res, next) {
   if (req.session.loggedin) {
     var id = req.body.theCourseID;
-    console.log(id);
 
     Post.find( {courseID : id}, function(err, docs) {
       //TODO sort docs, could come in any order
