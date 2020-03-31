@@ -21,13 +21,12 @@
       <a href="/home">Home</a>
       <a href="/Courses">My Courses</a>
       <a href="/signOut" class="right">Sign Out</a>
-      <a href="" class="right">My Account</a>
     </div>
 
 
     <!-- Main data for the page -->
     <div class="main">
-      <!-- Write all main code here -->
+
       {{#each posts}}
       <div class="outerPost" >
         <div class="post">
@@ -47,11 +46,41 @@
 
     <!-- FOOTER -->
     <div class="footer">
-      <h9>Gearoid & Aaron's footer</h9>
-      <p><br><br>Gearoid H:</p>
-      <p>Contact information: <a href="mailto:test@gmit.ie">test@gmit.ie</a></p>
-      <p><br><br>Aaron McK:</p>
-      <p>Contact information: <a href="mailto:test@gmit.ie">test@gmit.ie</a></p>
+      <div class="footerInner">
+
+        <h5>Contact information:</h5>
+        <p>Gearoid H: <a href="mailto:g0308088@gmit.ie">G0308088@gmit.ie</a></p>
+        <p>Aaron McK: <a href="mailto:g00299523@gmit.ie">G00299523@gmit.ie</a></p>
+      </div>
+      <div class="footerInner">
+        <h5>JavaScript</h5>
+        <a href="/getAppStatic" >App.js </a>
+        <a href="/getIndexStatic" ><br><br>index.js</a>
+        <h5><br><br>Models</h5>
+        <a href="/getCoursesModel" >courses.js</a>
+        <a href="/getPostsModel" ><br><br>posts.js</a>
+        <a href="/getUsersModel" ><br><br>users.js</a>
+        <a href="/javascripts/myfirstModule.js" ><br><br>Time Module</a>
+      </div>
+      <div class="footerInner">
+        <h5>HTML</h5>
+        <a href="/getHomeStatic" >Home.hbs</a>
+        <a href="/getCoursesStatic" ><br><br>Courses.hbs</a>
+        <a href="/getForumStatic" ><br><br>Forum.hbs</a>
+        <a href="/getLoginStatic" ><br><br>Login.hbs</a>
+      </div>
+      <div class="footerInner">
+        <h5>Stylesheets</h5>
+        <a href="/getLoginStyleStatic" >Login.css</a>
+        <a href="/getPagesStyleStatic" ><br><br>pages.css</a>
+      </div>
+      <div class="footerInner">
+        <h5>Database screen shots</h5>
+        <a href="/Images/databaseScreenshot.png" >Database</a>
+        <a href="/Images/collectionCourses.png" ><br><br>'Courses' Collection</a>
+        <a href="/Images/collectionPosts.png" ><br><br>'Posts' Collection</a>
+        <a href="/Images/collectionUsers.png" ><br><br>'Users' Collection</a>
+      </div>
     </div>
 
   </body>

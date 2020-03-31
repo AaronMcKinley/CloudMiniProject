@@ -57,28 +57,29 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/auth', function(req, res, next) {
-  User.findOne( {username : req.body.username,
-              password : req.body.password},
-              function(err, docs) {
-                if(!docs)
-                {
-                  res.render('login');
-                  return;
-                }
-                else {
-                  req.session.loggedin = true;
-              		req.session.username = req.body.username;
-                  //req.session.firstname =
-                  res.redirect('/home');
-                  res.end();
-                }
+  User.findOne(
+    {username : req.body.username,
+    password : req.body.password},
+    function(err, docs) {
+      if(!docs)
+      {
+        res.render('login');
+        return;
+      }
+      else {
+        req.session.loggedin = true;
+    		req.session.username = req.body.username;
+        req.session.firstname = docs.firstname;
+        res.redirect('/home');
+        res.end();
+      }
   });
 });
 
 // HOME Page
 router.get('/home', function(req, res, next) {
   if (req.session.loggedin) {
-  		res.render('HomePage', {yourName: req.session.username} );
+  		res.render('HomePage', {yourName: req.session.firstname} );
   } else { // User not logged in
   		res.redirect('/');
   		res.end();
@@ -161,7 +162,6 @@ router.post('/storeUser', function(req, res, next) {
    res.end();
 
 });
-// *****************************************************************************************************************************
 
 router.get('/signOut', function(req, res, next) {
   req.session.loggedin = false;
@@ -172,6 +172,53 @@ router.get('/signOut', function(req, res, next) {
   res.render('login', {message: 'You have been successfully logged out'});
 });
 
+// ************ Get static pages to display the code for the presentation *****************************************
 
+//  **** JavaScript ***********************************************
+router.get('/getAppStatic', function(req, res, next) {
+  res.sendFile(path.join(__dirname + '/../app.js'));
+});
 
+router.get('/getIndexStatic', function(req, res, next) {
+  res.sendFile(path.join(__dirname + '/index.js'));
+});
+
+// Models
+router.get('/getCoursesModel', function(req, res, next) {
+  res.sendFile(path.join(__dirname + '/../models/courses.js'));
+});
+
+router.get('/getPostsModel', function(req, res, next) {
+  res.sendFile(path.join(__dirname + '/../models/posts.js'));
+});
+
+router.get('/getUsersModel', function(req, res, next) {
+  res.sendFile(path.join(__dirname + '/../models/users.js'));
+});
+
+// *** HTML ********************************************************
+router.get('/getHomeStatic', function(req, res, next) {
+  res.sendFile(path.join(__dirname + '/../views/HomePage.hbs'));
+});
+
+router.get('/getCoursesStatic', function(req, res, next) {
+  res.sendFile(path.join(__dirname + '/../views/Courses.hbs'));
+});
+
+router.get('/getForumStatic', function(req, res, next) {
+  res.sendFile(path.join(__dirname + '/../views/Forum.hbs'));
+});
+
+router.get('/getLoginStatic', function(req, res, next) {
+  res.sendFile(path.join(__dirname + '/../views/login.hbs'));
+});
+
+// *** StyleSheets *************************************************
+router.get('/getLoginStyleStatic', function(req, res, next) {
+  res.sendFile(path.join(__dirname + '/../public/stylesheets/newLogin.css'));
+});
+
+router.get('/getPagesStyleStatic', function(req, res, next) {
+  res.sendFile(path.join(__dirname + '/../public/stylesheets/forumPageStyle.css'));
+});
 module.exports = router;
